@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es_CO" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--Tag de thymeleaf-->
+<h1 th:text="${title}"></h1>
+
+<hr>
+<!-- th:text="${usuario.nombre}" // intenamente accede al usuario.getUsuario() -->
+<h2>Nombre: <span th:text="${usuario.nombre}"></span></h2>
+
+</body>
+</html>
