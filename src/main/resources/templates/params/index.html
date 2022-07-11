@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es_CO" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Parametros en el request</title>
+</head>
+<body>
+
+<div th:text="${textoEnviadoPorParametro}"></div>
+
+<h2>Menu</h2>
+<ul>
+    <li>
+        <a th:href="@{/query-params/string(texto='Hola Gustavo')}" target="_blank">/query-params/string?texto=Hola Gustavo</a>
+    </li>
+    <li>
+        <a th:href="@{/query-params/mix-params(texto='Hola Gustavo', edad=26)}" target="_blank">/query-params/mix-params?texto=Hola Gustavo&edad=26</a>
+    </li>
+    <li>
+        <a th:href="@{/query-params/mix-params-request(texto='Hola Gustavo', edad=26)}" target="_blank">/query-params/mix-params-request?texto=Hola Gustavo&edad=26</a>
+    </li>
+</ul>
+
+</body>
+</html>

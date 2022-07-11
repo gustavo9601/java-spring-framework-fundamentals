@@ -12,5 +12,10 @@
 <!-- th:text="${usuario.nombre}" // intenamente accede al usuario.getUsuario() -->
 <h2>Nombre: <span th:text="${usuario.nombre}"></span></h2>
 
+<!--Condicional-->
+<span th:if="${usuario.email}"  th:text="${usuario.email}"></span>
+<span th:if="${usuario.email == null}">El usuario no tiene correo</span>
+
+
 </body>
 </html>

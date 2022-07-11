@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es_CO" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Index path variable</title>
+    <!--Añadiendo css local-->
+    <!-- Spring, mapeara la ruta desde la carpeta /resources/static/ -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+<h1>Menu</h1>
+<img width="200" th:src="@{/img/logo-spring.png}" alt="">
+
+<ul>
+    <li>
+        <a th:href="@{/path-variable-params/string/} + 'Hola Gustavo'" target="_blank">/path-variable-params/string/Hola
+            Gustavo</a>
+    </li>
+    <li>
+        <a th:href="@{/path-variable-params/string/} + 'Hola Gustavo' + '/' + 26" target="_blank">/path-variable-params/string/Hola
+            Gustavo/26</a>
+    </li>
+</ul>
+</body>
+</html>
