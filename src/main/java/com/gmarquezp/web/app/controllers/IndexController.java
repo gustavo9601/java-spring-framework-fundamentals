@@ -2,6 +2,7 @@ package com.gmarquezp.web.app.controllers;
 
 import com.gmarquezp.web.app.models.Usuario;
 import com.gmarquezp.web.app.services.IServicio;
+import com.gmarquezp.web.app.services.IServiciosComplejos;
 import com.gmarquezp.web.app.services.MiServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,10 @@ public class IndexController {
     @Autowired // Spring nos va a inyectar el objeto que se encuentra en el mismo paquete
             // @Qualifier("miServicio") // Le especificamos que implementacion queremos inyectar, si hay mas de una que use la interfaz
             IServicio miServicio; // inyectamos por tipo generico
+
+
+    @Autowired
+    IServiciosComplejos miServicioComplejo;
 
     // Especificando la inyeccion a un metodo
 /*
