@@ -1,6 +1,6 @@
 package com.gmarquezp.web.app.controllers;
 
-import com.gmarquezp.web.app.models.Usuario;
+import com.gmarquezp.web.app.models.domain.Usuario;
 import com.gmarquezp.web.app.services.IServicio;
 import com.gmarquezp.web.app.services.IServiciosComplejos;
 import com.gmarquezp.web.app.services.MiServicio;
@@ -61,7 +61,7 @@ public class IndexController {
 
     @GetMapping("/perfil")
     public String usuario(Model model) {
-        Usuario usuario = new Usuario("Juan", "Perez", "juan@a.com", "123456");
+        Usuario usuario = new Usuario("Juan", "juan@a.com", "123456");
         model.addAttribute("title", "Usuario Spring Framework");
         model.addAttribute("usuario", usuario);
         return "perfil";
@@ -69,7 +69,7 @@ public class IndexController {
 
     @GetMapping("/listar")
     public String listar(Model model) {
-        List<Usuario> usuarios = Arrays.asList(new Usuario("Juan", "Perez", null, ""), new Usuario("Juan", "Perez", "j@p.com", "1234"));
+        List<Usuario> usuarios = Arrays.asList(new Usuario("Juan", "Perez", ""), new Usuario("Juan",  "j@p.com", "1234"));
 
         model.addAttribute("title", "Usuario Spring Framework");
         model.addAttribute("usuarios", usuarios);
