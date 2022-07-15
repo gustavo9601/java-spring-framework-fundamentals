@@ -41,6 +41,13 @@ th:object="${usuario}" // permite especificar que sera tipo de un objeto que se 
         </div>
     </div>
     <div>
+        <label for="edad">Edad</label>
+        <input type="number" id="edad"  th:field="*{edad}"/>
+        <div th:if="${#fields.hasErrors('edad')}">
+            <span style="color:red" th:errors="*{edad}"></span>
+        </div>
+    </div>
+    <div>
         <input type="submit" value="Enviar"/>
     </div>
 
