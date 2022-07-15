@@ -1,9 +1,12 @@
 package com.gmarquezp.web.app.controllers;
 
 import com.gmarquezp.web.app.models.domain.Usuario;
+import com.gmarquezp.web.app.validators.UsuarioContrasenaValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +16,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/formularios")
 public class FormController {
+
+
+    @Autowired
+    private UsuarioContrasenaValidator contrasenaValidator; // Inyectamos el validador de contrasena
+
+
+    @InitBinder // Hace la inyeccion del validador de forma implicita cuando se use el @Valid
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(this.contrasenaValidator); // Inyectamos el validador de contrasena
+    }
 
     @GetMapping("")
     public String form(Model model) {
@@ -50,16 +63,20 @@ public class FormController {
                         Model model
     ) {
 
+        // Llamamos al validador personalizado de contrasena
+        // this.contrasenaValidator.validate(usuario, result);
+
         if (result.hasErrors()) {
-            System.out.println("Error no paso la validacion");
             System.out.println(" === Errores getAllErrors() == ");
             System.out.println(result.getAllErrors());
 
             Map<String, String> errores = new HashMap<>();
             System.out.println(" === Errores list == ");
+
             result.getFieldErrors().forEach(error -> {
-                System.out.println(error.getField() + ": " + error.getDefaultMessage());
-                errores.put(error.getField(), error.getDefaultMessage());
+                System.out.println(error.getCode() + "  |  " + error.getField() + ": " + error.getDefaultMessage());
+                errores.put(error.getCode() + "." + error.getField(), error.getDefaultMessage());
+
             });
 
             System.out.println(" === Errores Map == ");

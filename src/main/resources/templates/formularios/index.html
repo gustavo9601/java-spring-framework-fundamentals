@@ -13,12 +13,20 @@ th:object="${usuario}" // permite especificar que sera tipo de un objeto que se 
       th:object="${usuario}"
       method="post">
     <div>
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}"/>
-        <div th:if="${errores != null && errores.containsKey('nombre')}">
-            <span style="color:red" th:text="${errores.get('nombre')}"></span>
+        <label for="nombre">Identificador</label>
+        <input type="text" id="identificador" name="identificador" th:value="${usuario.identificador}"/>
+        <div th:if="${errores != null && errores.containsKey('IdentifcadorRegex.identificador')}">
+            <span style="color:red" th:text="${errores.get('IdentifcadorRegex.identificador')}"></span>
         </div>
 
+    </div>
+
+    <div>
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}"/>
+        <div th:if="${#fields.hasErrors('nombre')}">
+            <span style="color:red" th:errors="*{nombre}"></span>
+        </div>
     </div>
     <div>
         <label for="contrasena">Contraseña</label>
@@ -45,6 +53,20 @@ th:object="${usuario}" // permite especificar que sera tipo de un objeto que se 
         <input type="number" id="edad"  th:field="*{edad}"/>
         <div th:if="${#fields.hasErrors('edad')}">
             <span style="color:red" th:errors="*{edad}"></span>
+        </div>
+    </div>
+    <div>
+        <label for="paisNacimiento">Pais de nacimiento</label>
+        <input type="text" id="paisNacimiento"  th:field="*{paisNacimiento}"/>
+        <div th:if="${#fields.hasErrors('paisNacimiento')}">
+            <span style="color:red" th:errors="*{paisNacimiento}"></span>
+        </div>
+    </div>
+    <div>
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fechaNacimiento"  th:field="*{fechaNacimiento}"/>
+        <div th:if="${#fields.hasErrors('fechaNacimiento')}">
+            <span style="color:red" th:errors="*{fechaNacimiento}"></span>
         </div>
     </div>
     <div>

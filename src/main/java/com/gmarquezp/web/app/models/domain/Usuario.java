@@ -1,18 +1,30 @@
 package com.gmarquezp.web.app.models.domain;
 
 
+import com.gmarquezp.web.app.validators.IdentifcadorRegex;
+import com.gmarquezp.web.app.validators.Requerido;
+import com.gmarquezp.web.app.validators.UsuarioContrasenaValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.*;
+import java.util.Date;
 
 public class Usuario {
 
+    // @Pattern(regexp = "[A-Za-z0-9]*", message = "El identificador no puede contener caracteres especiales")
+    @IdentifcadorRegex  //  Validador personalizado usando anotaciones
+    @Size(min = 1, max = 3)
+    private String identificador;
+
     /*
-    * message ="" // espeifica el mensaje a retornar en la validacion
-    * Para organizar se usa el archivo resources/messages.properties donde se puede se descaoplan los mensajes
-    * */
+     * message ="" // espeifica el mensaje a retornar en la validacion
+     * Para organizar se usa el archivo resources/messages.properties donde se puede se descaoplan los mensajes
+     * */
     @NotEmpty(message = "El nombre es requerido y no puede ser vacio") // Valida que no este vacio y tenga algo de texto
     @Size(min = 3, max = 20) // Valida que tenga entre 3 y 20 caracteres
     private String nombre;
-    @NotEmpty
+    @NotBlank  // Valida que no este vacio y tenga algo de texto exepto de espacios en blanco
     private String contrasena;
     @NotEmpty
     @Email
@@ -20,7 +32,16 @@ public class Usuario {
 
     @Min(18) // Valida que sea mayor a 18
     @Max(100) // Valida que sea menor a 100
+    @NotNull // Validacion de nullo para tipos != String
     private Integer edad;
+
+    @Requerido // Validacion personalizada
+    private String paisNacimiento;
+
+    @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy") // Formato de fecha
+    private Date fechaNacimiento;
+
 
     public Usuario() {
     }
@@ -31,11 +52,13 @@ public class Usuario {
         this.email = email;
     }
 
-    public Usuario(String nombre, String contrasena, String email, Integer edad) {
+    public Usuario(String nombre, String contrasena, String email, Integer edad, String identificador, String paisNacimiento) {
         this.nombre = nombre;
         this.contrasena = contrasena;
         this.email = email;
         this.edad = edad;
+        this.identificador = identificador;
+        this.paisNacimiento = paisNacimiento;
     }
 
 
@@ -71,13 +94,39 @@ public class Usuario {
         this.edad = edad;
     }
 
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+    public String getPaisNacimiento() {
+        return paisNacimiento;
+    }
+
+    public void setPaisNacimiento(String paisNacimiento) {
+        this.paisNacimiento = paisNacimiento;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
-                "nombre='" + nombre + '\'' +
+                "identificador='" + identificador + '\'' +
+                ", nombre='" + nombre + '\'' +
                 ", contrasena='" + contrasena + '\'' +
                 ", email='" + email + '\'' +
                 ", edad=" + edad +
+                ", paisNacimiento='" + paisNacimiento + '\'' +
                 '}';
     }
 }
