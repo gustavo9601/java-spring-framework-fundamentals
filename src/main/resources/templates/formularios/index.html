@@ -57,7 +57,13 @@ th:object="${usuario}" // permite especificar que sera tipo de un objeto que se 
     </div>
     <div>
         <label for="paisNacimiento">Pais de nacimiento</label>
-        <input type="text" id="paisNacimiento"  th:field="*{paisNacimiento}"/>
+        <select id="paisNacimiento" th:field="*{paisNacimiento}">
+            <option value="">-- Seleccionar --</option>
+            <!--
+            paises.entrySet() // obtenemos todos los paises del Map a una lista iterable
+            -->
+            <option th:each="pais: ${paises.entrySet()}" th:text="${pais.value}" th:value="${pais.key}"></option>
+        </select>
         <div th:if="${#fields.hasErrors('paisNacimiento')}">
             <span style="color:red" th:errors="*{paisNacimiento}"></span>
         </div>
@@ -67,6 +73,16 @@ th:object="${usuario}" // permite especificar que sera tipo de un objeto que se 
         <input type="date" id="fechaNacimiento"  th:field="*{fechaNacimiento}"/>
         <div th:if="${#fields.hasErrors('fechaNacimiento')}">
             <span style="color:red" th:errors="*{fechaNacimiento}"></span>
+        </div>
+    </div>
+    <div>
+        <label for="genero">Genero</label>
+        <select id="genero" th:field="*{genero}">
+            <option value="">-- Seleccionar --</option>
+            <option th:each="genero: ${generos}" th:text="${genero}" th:value="${genero}"></option>
+        </select>
+        <div th:if="${#fields.hasErrors('genero')}">
+            <span style="color:red" th:errors="*{genero}"></span>
         </div>
     </div>
     <div>

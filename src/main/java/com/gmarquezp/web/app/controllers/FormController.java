@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,6 +33,8 @@ public class FormController {
         model.addAttribute("titulo", "Formularios Index");
         // Creamos el objeto vacio, para que no de error al momento de acceder por el Objeto desde la vista
         model.addAttribute("usuario", new Usuario());
+
+
 
         return "formularios/index";
     }
@@ -93,4 +96,22 @@ public class FormController {
         return "formularios/resultado";
 
     }
+
+    // El retorno de la funcion, se podra acceder en la vista con el nombre que se pase por parametro
+    @ModelAttribute("generos")
+    public List<String> generos(){
+        return List.of("Masculino", "Femenino", "No sabe no responde");
+    }
+
+    @ModelAttribute("paises")
+    public Map<String, String> paises(){
+        Map <String, String> paises = new HashMap<>();
+        paises.put("ES", "España");
+        paises.put("FR", "Francia");
+        paises.put("UK", "Reino Unido");
+        return paises;
+    }
+
+
+
 }

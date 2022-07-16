@@ -32,16 +32,21 @@ public class Usuario {
 
     @Min(18) // Valida que sea mayor a 18
     @Max(100) // Valida que sea menor a 100
-    @NotNull // Validacion de nullo para tipos != String
+    @NotNull // Validacion de nullo para tipos objeto y  != String
     private Integer edad;
 
     @Requerido // Validacion personalizada
     private String paisNacimiento;
 
     @NotNull
-    @DateTimeFormat(pattern = "dd/MM/yyyy") // Formato de fecha
+    @Past // La fecha debe ser pasada o igual a la actual
+    // @Future // La fecha debe ser futura o igual a la actual
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Formato de fecha
     private Date fechaNacimiento;
 
+
+    @NotEmpty
+    private String genero;
 
     public Usuario() {
     }
@@ -67,7 +72,7 @@ public class Usuario {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getContrasena() {
@@ -118,6 +123,14 @@ public class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -127,6 +140,8 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", edad=" + edad +
                 ", paisNacimiento='" + paisNacimiento + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", genero='" + genero + '\'' +
                 '}';
     }
 }

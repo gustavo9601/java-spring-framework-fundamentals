@@ -12,6 +12,10 @@
 <p>Contraseña: <span th:text="${usuario.contrasena}"></span></p>
 <p>Email: <span th:text="${usuario.email}"></span></p>
 <p>Edad: <span th:text="${usuario.edad}"></span></p>
+<!--
+#date.format(fecha, formato) // formato de la fecha usando el helper de spring
+-->
+<p>Fecha nacimiento: <span th:text="${#calendars.format(usuario.fechaNacimiento, 'dd/MM/yyyy')}"></span></p>
 
 </body>
 </html>
