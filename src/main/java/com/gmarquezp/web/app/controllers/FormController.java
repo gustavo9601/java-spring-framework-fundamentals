@@ -1,5 +1,6 @@
 package com.gmarquezp.web.app.controllers;
 
+import com.gmarquezp.web.app.models.domain.Ciudad;
 import com.gmarquezp.web.app.models.domain.Usuario;
 import com.gmarquezp.web.app.validators.UsuarioContrasenaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +93,7 @@ public class FormController {
         }
 
         model.addAttribute("usuario", usuario);
+        System.out.println("usuario enviado a la vista=\t" + usuario);
 
         return "formularios/resultado";
 
@@ -110,6 +112,22 @@ public class FormController {
         paises.put("FR", "Francia");
         paises.put("UK", "Reino Unido");
         return paises;
+    }
+
+    @ModelAttribute("ciudades")
+    public List<Ciudad> ciudades(){
+        return List.of(
+                new Ciudad(1L, "Bogota", "BOG"),
+                new Ciudad(2L, "Medellin", "MED"),
+                new Ciudad(3L, "Cali", "CAL")
+        );
+    }
+
+    @ModelAttribute("rolesString")
+    public List<String> roles(){
+        return List.of(
+                "ROLE_ADMIN", "ROLE_USER"
+        );
     }
 
 

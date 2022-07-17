@@ -7,8 +7,10 @@ import com.gmarquezp.web.app.validators.UsuarioContrasenaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 public class Usuario {
 
@@ -48,7 +50,17 @@ public class Usuario {
     @NotEmpty
     private String genero;
 
+    @Valid  // Indica que use las validaciones internas del objeto
+    private Ciudad ciudad;
+
+    @NotEmpty // Sirve para validar tambien listas
+    private List<String> roles;
+
+    // Podra ser opcional
+    private Boolean estaActivo;
+
     public Usuario() {
+        this.estaActivo = true;
     }
 
     public Usuario(String nombre, String contrasena, String email) {
@@ -131,6 +143,30 @@ public class Usuario {
         this.genero = genero;
     }
 
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public Boolean getEstaActivo() {
+        return estaActivo;
+    }
+
+    public void setEstaActivo(Boolean estaActivo) {
+        this.estaActivo = estaActivo;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -142,6 +178,9 @@ public class Usuario {
                 ", paisNacimiento='" + paisNacimiento + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", genero='" + genero + '\'' +
+                ", ciudad=" + ciudad +
+                ", roles=" + roles +
+                ", estaActivo=" + estaActivo +
                 '}';
     }
 }

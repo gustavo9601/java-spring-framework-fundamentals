@@ -85,6 +85,41 @@ th:object="${usuario}" // permite especificar que sera tipo de un objeto que se 
             <span style="color:red" th:errors="*{genero}"></span>
         </div>
     </div>
+
+
+    <div>
+        <label for="ciudad">Ciudad</label>
+        <select id="ciudad" th:field="*{ciudad.id}">
+            <option value="">-- Seleccionar --</option>
+            <option th:each="ciudad: ${ciudades}" th:text="${ciudad.codigo + ' | ' + ciudad.nombre}" th:value="${ciudad.id}"></option>
+        </select>
+        <div th:if="${#fields.hasErrors('ciudad.id')}">
+            <span style="color:red" th:errors="*{ciudad.id}"></span>
+        </div>
+    </div>
+
+
+    <div>
+        <label for="roles">Roles:</label>
+
+        <div th:each="role: ${rolesString}">
+            <input type="checkbox" id="roles"  th:field="*{roles}" th:value="${role}"/>
+            <label th:text="${role}"></label>
+        </div>
+
+        <div th:if="${#fields.hasErrors('roles')}">
+            <span style="color:red" th:errors="*{roles}"></span>
+        </div>
+    </div>
+
+    <div>
+        <label for="estaActivo">Esta Activo</label>
+        <input type="checkbox" id="estaActivo"  th:field="*{estaActivo}"/>
+        <div th:if="${#fields.hasErrors('estaActivo')}">
+            <span style="color:red" th:errors="*{estaActivo}"></span>
+        </div>
+    </div>
+
     <div>
         <input type="submit" value="Enviar"/>
     </div>
