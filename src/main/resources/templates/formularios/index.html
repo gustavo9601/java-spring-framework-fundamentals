@@ -3,128 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulario</title>
-</head>
-<body>
 
+    <!-- bootstrap th:ref => resources/static/ -->
 <!--
-th:object="${usuario}" // permite especificar que sera tipo de un objeto que se pase desde el controlador
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 -->
-<form th:action="@{/formularios/form-automatico}"
-      th:object="${usuario}"
-      method="post">
-    <div>
-        <label for="nombre">Identificador</label>
-        <input type="text" id="identificador" name="identificador" th:value="${usuario.identificador}"/>
-        <div th:if="${errores != null && errores.containsKey('IdentifcadorRegex.identificador')}">
-            <span style="color:red" th:text="${errores.get('IdentifcadorRegex.identificador')}"></span>
-        </div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" >
 
-    </div>
 
-    <div>
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" th:value="${usuario.nombre}"/>
-        <div th:if="${#fields.hasErrors('nombre')}">
-            <span style="color:red" th:errors="*{nombre}"></span>
-        </div>
+</head>
+<body class="container">
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Formulario Usuario</h1>
     </div>
-    <div>
-        <label for="contrasena">Contraseña</label>
+</div>
+<div class="row">
+    <div class="col-12">
         <!--
-        th:field="*{contrasena} // realiza el binding entre el atributo del objeto y el input
+        th:object="${usuario}" // permite especificar que sera tipo de un objeto que se pase desde el controlador
         -->
-        <input type="password" id="contrasena" th:field="*{contrasena}"/>
-        <!--
-        #fields.hasErrors('nombre') // usamos el helper de tymleaft para verificar si existe error
-        -->
-        <div th:if="${#fields.hasErrors('contrasena')}">
-            <span style="color:red" th:errors="*{contrasena}"></span>
-        </div>
-    </div>
-    <div>
-        <label for="email">Email</label>
-        <input type="text" id="email"  th:field="*{email}"/>
-        <div th:if="${#fields.hasErrors('email')}">
-            <span style="color:red" th:errors="*{email}"></span>
-        </div>
-    </div>
-    <div>
-        <label for="edad">Edad</label>
-        <input type="number" id="edad"  th:field="*{edad}"/>
-        <div th:if="${#fields.hasErrors('edad')}">
-            <span style="color:red" th:errors="*{edad}"></span>
-        </div>
-    </div>
-    <div>
-        <label for="paisNacimiento">Pais de nacimiento</label>
-        <select id="paisNacimiento" th:field="*{paisNacimiento}">
-            <option value="">-- Seleccionar --</option>
-            <!--
-            paises.entrySet() // obtenemos todos los paises del Map a una lista iterable
-            -->
-            <option th:each="pais: ${paises.entrySet()}" th:text="${pais.value}" th:value="${pais.key}"></option>
-        </select>
-        <div th:if="${#fields.hasErrors('paisNacimiento')}">
-            <span style="color:red" th:errors="*{paisNacimiento}"></span>
-        </div>
-    </div>
-    <div>
-        <label for="fechaNacimiento">Fecha de nacimiento</label>
-        <input type="date" id="fechaNacimiento"  th:field="*{fechaNacimiento}"/>
-        <div th:if="${#fields.hasErrors('fechaNacimiento')}">
-            <span style="color:red" th:errors="*{fechaNacimiento}"></span>
-        </div>
-    </div>
-    <div>
-        <label for="genero">Genero</label>
-        <select id="genero" th:field="*{genero}">
-            <option value="">-- Seleccionar --</option>
-            <option th:each="genero: ${generos}" th:text="${genero}" th:value="${genero}"></option>
-        </select>
-        <div th:if="${#fields.hasErrors('genero')}">
-            <span style="color:red" th:errors="*{genero}"></span>
-        </div>
-    </div>
+        <form th:action="@{/formularios/form-automatico}"
+              th:object="${usuario}"
+              method="post">
+            <div class="form-group">
+                <label for="nombre">Identificador</label>
+                <input class="form-control"  type="text" id="identificador" name="identificador" th:value="${usuario.identificador}"/>
+                <div th:if="${errores != null && errores.containsKey('IdentifcadorRegex.identificador')}">
+                    <span style="color:red" th:text="${errores.get('IdentifcadorRegex.identificador')}"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input class="form-control"  type="text" id="nombre" name="nombre" th:value="${usuario.nombre}"/>
+                <div th:if="${#fields.hasErrors('nombre')}">
+                    <span style="color:red" th:errors="*{nombre}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <!--
+                th:field="*{contrasena} // realiza el binding entre el atributo del objeto y el input
+                -->
+                <input class="form-control"  type="password" id="contrasena" th:field="*{contrasena}"/>
+                <!--
+                #fields.hasErrors('nombre') // usamos el helper de tymleaft para verificar si existe error
+                -->
+                <div th:if="${#fields.hasErrors('contrasena')}">
+                    <span style="color:red" th:errors="*{contrasena}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control"  type="text" id="email"  th:field="*{email}"/>
+                <div th:if="${#fields.hasErrors('email')}">
+                    <span style="color:red" th:errors="*{email}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="edad">Edad</label>
+                <input class="form-control"  type="number" id="edad"  th:field="*{edad}"/>
+                <div th:if="${#fields.hasErrors('edad')}">
+                    <span style="color:red" th:errors="*{edad}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="paisNacimiento">Pais de nacimiento</label>
+                <select class="form-control"  id="paisNacimiento" th:field="*{paisNacimiento}">
+                    <option value="">-- Seleccionar --</option>
+                    <!--
+                    paises.entrySet() // obtenemos todos los paises del Map a una lista iterable
+                    -->
+                    <option th:each="pais: ${paises.entrySet()}" th:text="${pais.value}" th:value="${pais.key}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('paisNacimiento')}">
+                    <span style="color:red" th:errors="*{paisNacimiento}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input class="form-control"  type="date" id="fechaNacimiento"  th:field="*{fechaNacimiento}"/>
+                <div th:if="${#fields.hasErrors('fechaNacimiento')}">
+                    <span style="color:red" th:errors="*{fechaNacimiento}"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="genero">Genero</label>
+                <select class="form-control"  id="genero" th:field="*{genero}">
+                    <option value="">-- Seleccionar --</option>
+                    <option th:each="genero: ${generos}" th:text="${genero}" th:value="${genero}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('genero')}">
+                    <span style="color:red" th:errors="*{genero}"></span>
+                </div>
+            </div>
 
 
-    <div>
-        <label for="ciudad">Ciudad</label>
-        <select id="ciudad" th:field="*{ciudad.id}">
-            <option value="">-- Seleccionar --</option>
-            <option th:each="ciudad: ${ciudades}" th:text="${ciudad.codigo + ' | ' + ciudad.nombre}" th:value="${ciudad.id}"></option>
-        </select>
-        <div th:if="${#fields.hasErrors('ciudad.id')}">
-            <span style="color:red" th:errors="*{ciudad.id}"></span>
-        </div>
+            <div class="form-group">
+                <label for="ciudad">Ciudad</label>
+                <select class="form-control"  id="ciudad" th:field="*{ciudad.id}">
+                    <option value="">-- Seleccionar --</option>
+                    <option th:each="ciudad: ${ciudades}" th:text="${ciudad.codigo + ' | ' + ciudad.nombre}" th:value="${ciudad.id}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('ciudad.id')}">
+                    <span style="color:red" th:errors="*{ciudad.id}"></span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="roles">Roles:</label>
+
+                <div th:each="role: ${rolesString}">
+                    <input  type="checkbox" id="roles"  th:field="*{roles}" th:value="${role}"/>
+                    <label th:text="${role}"></label>
+                </div>
+
+                <div th:if="${#fields.hasErrors('roles')}">
+                    <span style="color:red" th:errors="*{roles}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="estaActivo">Esta Activo</label>
+                <input type="checkbox" id="estaActivo"  th:field="*{estaActivo}"/>
+                <div th:if="${#fields.hasErrors('estaActivo')}">
+                    <span style="color:red" th:errors="*{estaActivo}"></span>
+                </div>
+            </div>
+
+            <div>
+                <input class="form-control"  type="hidden" id="valorSecreto"  th:field="*{valorSecreto}"/>
+            </div>
+
+            <div>
+                <input class="btn btn-dark btn-block"  type="submit" value="Enviar"/>
+            </div>
+
+        </form>
     </div>
+</div>
 
-
-    <div>
-        <label for="roles">Roles:</label>
-
-        <div th:each="role: ${rolesString}">
-            <input type="checkbox" id="roles"  th:field="*{roles}" th:value="${role}"/>
-            <label th:text="${role}"></label>
-        </div>
-
-        <div th:if="${#fields.hasErrors('roles')}">
-            <span style="color:red" th:errors="*{roles}"></span>
-        </div>
-    </div>
-
-    <div>
-        <label for="estaActivo">Esta Activo</label>
-        <input type="checkbox" id="estaActivo"  th:field="*{estaActivo}"/>
-        <div th:if="${#fields.hasErrors('estaActivo')}">
-            <span style="color:red" th:errors="*{estaActivo}"></span>
-        </div>
-    </div>
-
-    <div>
-        <input type="submit" value="Enviar"/>
-    </div>
-
-</form>
 
 </body>
 </html>

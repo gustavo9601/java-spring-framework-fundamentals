@@ -59,8 +59,10 @@ public class Usuario {
     // Podra ser opcional
     private Boolean estaActivo;
 
+    @NotNull
+    private String valorSecreto;
+
     public Usuario() {
-        this.estaActivo = true;
     }
 
     public Usuario(String nombre, String contrasena, String email) {
@@ -165,6 +167,14 @@ public class Usuario {
 
     public void setEstaActivo(Boolean estaActivo) {
         this.estaActivo = estaActivo;
+    }
+
+    public String getValorSecreto() {
+        return valorSecreto;
+    }
+
+    public void setValorSecreto(String valorSecreto) {
+        this.valorSecreto = valorSecreto;
     }
 
     @Override

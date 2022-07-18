@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("usuario") // indica que se podra acceder a este objeto desde la sesion
 @RequestMapping("/formularios")
 public class FormController {
 
@@ -33,8 +35,12 @@ public class FormController {
     public String form(Model model) {
         model.addAttribute("titulo", "Formularios Index");
         // Creamos el objeto vacio, para que no de error al momento de acceder por el Objeto desde la vista
-        model.addAttribute("usuario", new Usuario());
+        Usuario usuario = new Usuario();
+        usuario.setValorSecreto("Valor ultra secreto");
+        usuario.setEstaActivo(true);
+        usuario.setRoles(List.of("ROLE_USER"));
 
+        model.addAttribute("usuario", usuario);
 
 
         return "formularios/index";
@@ -92,22 +98,42 @@ public class FormController {
 
         }
 
+        // Se redirecciona, para que al recrgar el navegador no se vuelva a enviar el request
+        // En la session se guardo el usuario, para que se acceda desde el endpoint
+        return "redirect:/formularios/ver";
+
+    }
+
+    @GetMapping("/ver")
+    public String ver(
+            @SessionAttribute(value = "usuario", required = false) Usuario usuario, // Obtenemos el usuario de la sesion
+            Model model,
+            SessionStatus status // Indica que se termino de procesar el formulario
+    ) {
+
+
+        System.out.println("usuario  a enviar a la vista=\t" + usuario);
+        if (usuario == null){ // Para reenviar si se accede directamente al path sin que el usuario exista en la session
+            return "redirect:/formularios";
+        }
+
+
         model.addAttribute("usuario", usuario);
-        System.out.println("usuario enviado a la vista=\t" + usuario);
+
+        status.setComplete();
 
         return "formularios/resultado";
-
     }
 
     // El retorno de la funcion, se podra acceder en la vista con el nombre que se pase por parametro
     @ModelAttribute("generos")
-    public List<String> generos(){
+    public List<String> generos() {
         return List.of("Masculino", "Femenino", "No sabe no responde");
     }
 
     @ModelAttribute("paises")
-    public Map<String, String> paises(){
-        Map <String, String> paises = new HashMap<>();
+    public Map<String, String> paises() {
+        Map<String, String> paises = new HashMap<>();
         paises.put("ES", "España");
         paises.put("FR", "Francia");
         paises.put("UK", "Reino Unido");
@@ -115,7 +141,7 @@ public class FormController {
     }
 
     @ModelAttribute("ciudades")
-    public List<Ciudad> ciudades(){
+    public List<Ciudad> ciudades() {
         return List.of(
                 new Ciudad(1L, "Bogota", "BOG"),
                 new Ciudad(2L, "Medellin", "MED"),
@@ -124,12 +150,11 @@ public class FormController {
     }
 
     @ModelAttribute("rolesString")
-    public List<String> roles(){
+    public List<String> roles() {
         return List.of(
                 "ROLE_ADMIN", "ROLE_USER"
         );
     }
-
 
 
 }
