@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es_CO" xmlns:th="http://thymeleaf.org">
+
+<body>
+
+<!--
+th:fragment="interceptor_tiempo" // el id para invocarlo en los otros archivos
+-->
+<section th:fragment="interceptor_tiempo">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                <span th:text="'Tiempo transcurrido: ' + ${tiempoTranscurrido} + ' en milisegundos.'"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
