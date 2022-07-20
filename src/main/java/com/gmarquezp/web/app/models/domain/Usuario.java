@@ -71,6 +71,13 @@ public class Usuario {
         this.email = email;
     }
 
+    public Usuario(String nombre, String contrasena, String email, String identificador) {
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+        this.email = email;
+        this.identificador = identificador;
+    }
+
     public Usuario(String nombre, String contrasena, String email, Integer edad, String identificador, String paisNacimiento) {
         this.nombre = nombre;
         this.contrasena = contrasena;
