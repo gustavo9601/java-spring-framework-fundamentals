@@ -29,7 +29,9 @@ public class QueryParamsController {
 
     @GetMapping("/mix-params")
     // Sobrescritorua de metodo pasando difetenres parametros
-    public String param(@RequestParam(required = false) String texto, @RequestParam(name = "edad") Integer edad, Model model) {
+    public String param(@RequestParam(required = false) String texto,
+                        @RequestParam(name = "edad") Integer edad,
+                        Model model) {
         model.addAttribute("textoEnviadoPorParametro", texto);
         model.addAttribute("mensaje", ("Texto:\t" + texto + "\t|\tEdad:\t" + edad));
         return "params/ver";

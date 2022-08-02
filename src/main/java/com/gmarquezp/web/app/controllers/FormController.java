@@ -4,6 +4,7 @@ import com.gmarquezp.web.app.models.domain.Ciudad;
 import com.gmarquezp.web.app.models.domain.Usuario;
 import com.gmarquezp.web.app.validators.UsuarioContrasenaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +25,30 @@ import java.util.Map;
 public class FormController {
 
 
+    /*
+     *  @RequestParam // Si el metodo es POST, se debera enviar como campo del body
+     * */
+
     @Autowired
     private UsuarioContrasenaValidator contrasenaValidator; // Inyectamos el validador de contrasena
 
 
-    @InitBinder // Hace la inyeccion del validador de forma implicita cuando se use el @Valid
+    /*
+    * // Hace la inyeccion del validador de forma implicita cuando se use el @Valid
+    * // @InitBinder  // Permite crear metodos para configurar el Data Binding con el modelo
+    *
+    * */
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.addValidators(this.contrasenaValidator); // Inyectamos el validador de contrasena
+        // Añadimos el validador de contrasena
+        binder.addValidators(this.contrasenaValidator);
+
+        /*
+        // Cuando realice el databindg para el atributo de tipo Date, debe utilizar este formato para el bindeo
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        */
     }
 
     @GetMapping("")
@@ -86,7 +106,6 @@ public class FormController {
             result.getFieldErrors().forEach(error -> {
                 System.out.println(error.getCode() + "  |  " + error.getField() + ": " + error.getDefaultMessage());
                 errores.put(error.getCode() + "." + error.getField(), error.getDefaultMessage());
-
             });
 
             System.out.println(" === Errores Map == ");
@@ -113,7 +132,7 @@ public class FormController {
 
 
         System.out.println("usuario  a enviar a la vista=\t" + usuario);
-        if (usuario == null){ // Para reenviar si se accede directamente al path sin que el usuario exista en la session
+        if (usuario == null) { // Para reenviar si se accede directamente al path sin que el usuario exista en la session
             return "redirect:/formularios";
         }
 

@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
+
 public class Usuario {
 
     // @Pattern(regexp = "[A-Za-z0-9]*", message = "El identificador no puede contener caracteres especiales")
