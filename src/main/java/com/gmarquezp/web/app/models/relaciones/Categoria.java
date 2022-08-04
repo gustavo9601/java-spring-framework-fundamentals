@@ -1,4 +1,4 @@
-package com.gmarquezp.web.app.models.domain;
+package com.gmarquezp.web.app.models.relaciones;
 
 import javax.persistence.*;
 

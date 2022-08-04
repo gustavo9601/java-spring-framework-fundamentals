@@ -1,8 +1,13 @@
-package com.gmarquezp.web.app.models.domain;
+package com.gmarquezp.web.app.models.relaciones;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "vacantes")
 public class Vacante {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombre;
     private String descripcion;
@@ -10,8 +15,12 @@ public class Vacante {
     private Double salario;
     private Integer destacado;
     private String imagen = "no-image.png";
-    private String status;
+    private String estatus;
     private String detalles;
+
+    // @Transient // No se persiste en la base de datos y se ignora
+    @OneToOne // Una vacante solo puede tener una categoria
+    @JoinColumn(name = "idcategoria") // llave de la tabla actual vacantes
     private Categoria categoria;
 
     public Vacante() {
@@ -73,12 +82,12 @@ public class Vacante {
         this.imagen = imagen;
     }
 
-    public String getStatus() {
-        return status;
+    public String getEstatus() {
+        return estatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEstatus(String status) {
+        this.estatus = status;
     }
 
     public String getDetalles() {
@@ -107,7 +116,7 @@ public class Vacante {
                 ", salario=" + salario +
                 ", destacado=" + destacado +
                 ", imagen='" + imagen + '\'' +
-                ", status='" + status + '\'' +
+                ", status='" + estatus + '\'' +
                 ", detalles='" + detalles + '\'' +
                 ", categoria=" + categoria +
                 '}';
