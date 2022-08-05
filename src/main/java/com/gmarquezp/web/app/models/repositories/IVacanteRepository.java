@@ -16,7 +16,7 @@ public interface IVacanteRepository extends JpaRepository<Vacante, Integer> {
     List<Vacante> findByEstatusAndDestacadoOrderByIdDesc(String estatus, Integer destacado);
 
     // filtro por rango de salario
-    List<Vacante> findBySalarioBetweenAnd(double min, double max);
+    List<Vacante> findBySalarioBetween(double min, double max);
 
     // filtro por varios estatus
     List<Vacante> findByEstatusIn(List<String> estatus);
