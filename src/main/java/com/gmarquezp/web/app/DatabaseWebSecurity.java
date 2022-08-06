@@ -1,11 +1,14 @@
 package com.gmarquezp.web.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -38,17 +41,33 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter {
                         "/bootstrap/**",
                         "/images/**",
                         "/tinymce/**",
-                        "/logos/**").permitAll()
+                        "/logos/**"
+                ).permitAll()
                 // Las vistas públicas no requieren autenticación
                 .antMatchers("/",
                         "/signup",
                         "/search",
-                        "/vacantes/view/**").permitAll()
-            // Todas las demás URLs de la Aplicación requieren autenticación
+                        "/vacantes/view/**",
+                        "/**").permitAll()
+                // Protegiendo por Roles los siguientes recursos
+                .antMatchers("/vacantes/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
+                .antMatchers("/categorias/**").hasAnyAuthority("SUPERVISOR", "ADMINISTRADOR")
+                .antMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
+
+                // Todas las demás URLs de la Aplicación requieren autenticación
                 .anyRequest().authenticated()
-            // El formulario de Login no requiere autenticacion
+                // El formulario de Login no requiere autenticacion
                 .and().formLogin().permitAll();
     }
 
+
+    /*
+    * // Creando un bean, para encriptar contraseñas
+    * // SpringSecurity si detectara y esperar siempre recibir las contraseñas encriptadas
+    * */
+    @Bean("passwordEncoder")
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

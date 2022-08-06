@@ -9,6 +9,7 @@ import com.gmarquezp.web.app.models.repositories.IPerfilRepository;
 import com.gmarquezp.web.app.models.repositories.IUsuarioRepository;
 import com.gmarquezp.web.app.models.repositories.IVacanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -36,6 +38,10 @@ public class SpringFrameworkFundamentalsApplication implements CommandLineRunner
 
     @Autowired
     private IPerfilRepository perfilRepository;
+
+    @Autowired
+    @Qualifier("passwordEncoder")
+    private PasswordEncoder passwordEncoder;
 
 
     public static void main(String[] args) {
@@ -105,13 +111,14 @@ public class SpringFrameworkFundamentalsApplication implements CommandLineRunner
         this.crearUsuarioConPerfil();
         this.imprimirTitulos("Buscar usuario por id");
         this.buscarUsuariosConPerfil();
+
+        // Ejemplo contraseña Encriptada
+        this.imprimirTitulos("Contraseña encriptada");
+        this.ejemploContraseñEncriptada();
     }
 
 
 
-    /*
-     *
-     * */
 
     private void guardarCategoria() {
 // Se crea una categoria
@@ -307,6 +314,11 @@ public class SpringFrameworkFundamentalsApplication implements CommandLineRunner
         this.vacanteRepository.findByEstatus("Aprobada").forEach(vacante -> {
             System.out.println("Vacante encontrada=\t" + vacante.getNombre());
         });
+    }
+
+    private void ejemploContraseñEncriptada(){
+        String contrasenaEncriptada = this.passwordEncoder.encode("Hello World");
+        System.out.println("contrasenaEncriptada = " + contrasenaEncriptada);
     }
 
     private void imprimirTitulos(String titulo) {
