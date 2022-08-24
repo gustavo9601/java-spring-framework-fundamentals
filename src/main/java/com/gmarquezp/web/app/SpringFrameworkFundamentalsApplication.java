@@ -1,5 +1,7 @@
 package com.gmarquezp.web.app;
 
+import com.gmarquezp.web.app.aop.TargetObject;
+import com.gmarquezp.web.app.autowire_listas.Figura;
 import com.gmarquezp.web.app.models.relaciones.Categoria;
 import com.gmarquezp.web.app.models.relaciones.Perfil;
 import com.gmarquezp.web.app.models.relaciones.UsuarioP;
@@ -8,11 +10,13 @@ import com.gmarquezp.web.app.models.repositories.ICategoriaRepository;
 import com.gmarquezp.web.app.models.repositories.IPerfilRepository;
 import com.gmarquezp.web.app.models.repositories.IUsuarioRepository;
 import com.gmarquezp.web.app.models.repositories.IVacanteRepository;
+import com.gmarquezp.web.app.perfiles.IEnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 public class SpringFrameworkFundamentalsApplication implements CommandLineRunner {
@@ -43,9 +48,27 @@ public class SpringFrameworkFundamentalsApplication implements CommandLineRunner
     @Qualifier("passwordEncoder")
     private PasswordEncoder passwordEncoder;
 
+    /*
+    * Devolvera todas las implementaciones que tenga la interfaz
+    * */
+    @Autowired
+    private List<Figura> figuras;
+
+    @Autowired
+    private TargetObject targetObject;
+
+    private static Logger logger = Logger.getLogger(SpringFrameworkFundamentalsApplication.class.getName());
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringFrameworkFundamentalsApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(SpringFrameworkFundamentalsApplication.class, args);
+
+
+        /*
+         * Manejo de perfil spring
+         * */
+
+        IEnvironmentService environmentService = context.getBean(IEnvironmentService.class); // Obtiene el bean inyectado
+        logger.info("Get environment: " + environmentService.getEnvironment());
     }
 
     /*
@@ -115,6 +138,24 @@ public class SpringFrameworkFundamentalsApplication implements CommandLineRunner
         // Ejemplo contraseña Encriptada
         this.imprimirTitulos("Contraseña encriptada");
         this.ejemploContraseñEncriptada();
+
+
+        /*
+        * Listas de autowired
+        * */
+        this.imprimirTitulos("Listas de autowired");
+        this.figuras.forEach((Figura figura) -> {
+            System.out.println("figura area=\t " + figura.calcularArea());
+        });
+
+
+        /*
+        * AOP Aspectos
+        * */
+        this.imprimirTitulos("AOP Aspectos");
+        this.targetObject.saludando();
+
+        this.targetObject.despedida();
     }
 
 

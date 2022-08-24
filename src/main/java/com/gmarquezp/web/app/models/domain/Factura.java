@@ -59,7 +59,7 @@ public class Factura {
      * */
 
 
-    @PostConstruct //Se ejecuta despues de la ejecucion del constructor
+    @PostConstruct //Se ejecuta despues de la inyeccion de dependencias
     public void initializar() {
         System.out.println("PostConstruct Factura =)");
     }

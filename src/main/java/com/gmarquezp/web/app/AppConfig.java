@@ -17,6 +17,7 @@ public class AppConfig {
 
     // @Bean // Spring will automatically scan this class and register it as a bean
     // Permite registrar un bean en el contexto de spring, sin usar una anotacion en la implementacion
+    // Forma explicita
     @Bean("miServicioComplejo")
     public IServiciosComplejos miServicioComplejo() {
         return new ServicioComplejo();

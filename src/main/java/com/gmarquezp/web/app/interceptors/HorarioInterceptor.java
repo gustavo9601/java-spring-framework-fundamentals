@@ -2,7 +2,7 @@ package com.gmarquezp.web.app.interceptors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -38,7 +38,6 @@ public class HorarioInterceptor implements HandlerInterceptor {
         }
 
         logger.info("No se puede acceder a la aplicacion, llegaste por fuera del horario");
-
         // Redireccionando a otra ruta
         response.sendRedirect(request.getContextPath().concat("/horario-clientes/cerrado"));
 

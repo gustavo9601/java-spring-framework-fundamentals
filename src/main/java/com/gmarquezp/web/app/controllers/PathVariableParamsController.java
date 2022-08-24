@@ -13,6 +13,9 @@ public class PathVariableParamsController {
 
 
     /*
+
+    @Value("valor") // Define un valor y se lo inyecta al atributo
+
     * Atributos en el application.properties
     * @Value("${llave_atributo}") // buscara la llame en el application.properties
     * */
